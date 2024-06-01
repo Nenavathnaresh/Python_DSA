@@ -34,7 +34,7 @@ def diameter_of_tree(root):
 #       1
 #     /  \
 #    2    3
-# The diameter is 3 (nodes 2 -> 1 -> 3).
+# The diameter is 3 (nodes 2 -> 1 -> 3).   
 root1 = Node(1)
 root1.left = Node(2)
 root1.right = Node(3)
