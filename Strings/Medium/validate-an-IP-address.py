@@ -29,3 +29,18 @@ class Solution:
 solution = Solution()
 print(solution.isValid("222.111.111.111"))  # Output: 1
 print(solution.isValid("5555..555"))        # Output: 0
+
+##############################################################################################
+
+class Solution:
+    def isValid(self, str):
+        #code here
+        split_str = str.split(".")
+        
+        if len(split_str) != 4 :
+            return False
+        for num in split_str:
+            if int(num) > 255:
+                return False
+        return True
+
