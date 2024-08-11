@@ -46,3 +46,30 @@ print(JobScheduling(jobs, N))  # Output: [2, 60]
 jobs = [Job(1, 2, 100), Job(2, 1, 19), Job(3, 2, 27), Job(4, 1, 25), Job(5, 1, 15)]
 N = len(jobs)
 print(JobScheduling(jobs, N))  # Output: [2, 127]
+
+
+##################################################################################################
+
+class Solution:
+    
+    #Function to find the maximum profit and the number of jobs done.
+    def JobScheduling(self,Jobs,n):
+        
+        # code here
+        Jobs.sort(key = lambda x : x.profit, reverse = True)
+        max_deadline = max(job.deadline for job in Jobs)
+        
+        slots = [-1] * max_deadline 
+        job_count = 0
+        job_profit = 0
+        
+        for job in Jobs:
+            # j_id, deadline, profit = job 
+            
+            for j in range(min(max_deadline,job.deadline)-1,-1,-1):
+                if slots[j] == -1:
+                    slots[j] = job.id
+                    job_count += 1 
+                    job_profit += job.profit
+                    break
+        return job_count, job_profit
