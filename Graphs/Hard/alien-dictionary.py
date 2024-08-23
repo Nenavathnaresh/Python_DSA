@@ -54,3 +54,57 @@ print(findOrder(dict1, N1, K1))  # Possible outputs: "bdac", "bcda", etc.
 dict2 = ["caa", "aaa", "aab"]
 N2, K2 = 3, 3
 print(findOrder(dict2, N2, K2))  # Possible output: "cab"
+
+
+##########################################################################################
+
+
+from collections import defaultdict, deque
+
+def build_graph(dict, N, K):
+    graph = defaultdict(set)
+    indegree = {chr(i + ord('a')): 0 for i in range(K)}
+    
+    for i in range(N - 1):
+        word1 = dict[i]
+        word2 = dict[i + 1]
+        min_len = min(len(word1), len(word2))
+        
+        for j in range(min_len):
+            if word1[j] != word2[j]:
+                if word2[j] not in graph[word1[j]]:
+                    graph[word1[j]].add(word2[j])
+                    indegree[word2[j]] += 1
+                break
+    
+    return graph, indegree
+
+def topological_sort(graph, indegree, K):
+    queue = deque([node for node in indegree if indegree[node] == 0])
+    order = []
+    
+    while queue:
+        current = queue.popleft()
+        order.append(current)
+        
+        for neighbor in graph[current]:
+            indegree[neighbor] -= 1
+            if indegree[neighbor] == 0:
+                queue.append(neighbor)
+    
+    if len(order) == K:
+        return ''.join(order)
+    else:
+        return ""
+
+def find_order(dict, N, K):
+    graph, indegree = build_graph(dict, N, K)
+    return topological_sort(graph, indegree, K)
+
+# Example usage:
+N = 5
+K = 4
+dict = ["baa", "abcd", "abca", "cab", "cad"]
+order = find_order(dict, N, K)
+print(order)  # Possible output: "bdac"
+
