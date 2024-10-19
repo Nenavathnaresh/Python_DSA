@@ -20,3 +20,31 @@ def countStrings(N):
 # Example usage:
 N = 3
 print(countStrings(N))  # Output: 5
+
+######################################################################################  
+
+MOD = 10**9 + 7
+
+def countStrings(N):
+    # Base cases
+    if N == 1:
+        return 2
+    if N == 2:
+        return 3
+    
+    # Initialize dp[1] and dp[2]
+    prev2 = 2  # dp[1]
+    prev1 = 3  # dp[2]
+    
+    # Fill dp array for all n from 3 to N
+    for i in range(3, N + 1):
+        curr = (prev1 + prev2) % MOD
+        prev2 = prev1
+        prev1 = curr
+    
+    return prev1
+
+# Example Usage
+print(countStrings(3))  # Output: 5
+print(countStrings(2))  # Output: 3
+
