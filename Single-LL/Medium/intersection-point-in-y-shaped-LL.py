@@ -63,3 +63,40 @@ head2 = ListNode(10)
 head2.next = common
 
 print(intersectPoint(head1, head2))  # Output: 15
+
+# $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+class ListNode:
+    def __init__(self, value=0, next=None):
+        self.value = value
+        self.next = next
+
+def getLength(head):
+    length = 0
+    while head:
+        length += 1
+        head = head.next
+    return length
+
+def findIntersection(headA, headB):
+    # Get the lengths of both lists
+    lenA = getLength(headA)
+    lenB = getLength(headB)
+    
+    # Move the pointer of the longer list forward by the length difference
+    while lenA > lenB:
+        headA = headA.next
+        lenA -= 1
+    while lenB > lenA:
+        headB = headB.next
+        lenB -= 1
+    
+    # Move both pointers together until they meet at the intersection point or reach the end
+    while headA and headB:
+        if headA == headB:
+            return headA.value  # Return the value of the intersection node
+        headA = headA.next
+        headB = headB.next
+    
+    return -1  # If no intersection, return -1
+
