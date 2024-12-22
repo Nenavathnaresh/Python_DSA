@@ -66,3 +66,42 @@ class Solution:
         res = "".join(res)  # convert the result back to a string
 
         return res[0:l] 
+    
+
+    ############################################################
+
+
+def add_binary_strings(s1, s2):
+    # Initialize pointers and carry
+    i, j = len(s1) - 1, len(s2) - 1
+    carry = 0
+    result = []
+
+    # Traverse both strings from right to left
+    while i >= 0 or j >= 0 or carry:
+        bit1 = int(s1[i]) if i >= 0 else 0
+        bit2 = int(s2[j]) if j >= 0 else 0
+
+        # Add the bits and the carry
+        total = bit1 + bit2 + carry
+        result.append(str(total % 2))  # Append the current bit
+        carry = total // 2             # Update carry
+
+        # Move pointers
+        i -= 1
+        j -= 1
+
+    # Reverse and join the result
+    final_result = ''.join(result[::-1])
+    
+    # Remove leading zeros
+    return final_result.lstrip('0') or '0'
+
+# Example Usage
+s1 = "1101"
+s2 = "111"
+print(add_binary_strings(s1, s2))  # Output: 10100
+
+s1 = "00100"
+s2 = "010"
+print(add_binary_strings(s1, s2))  # Output: 110
